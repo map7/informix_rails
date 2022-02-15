@@ -39,7 +39,7 @@ describe "Per2Erb" do
 
     describe "passing in a text field" do
       it "outputs nil" do
-
+        expect(@per2erb.convert_label("f013   ")).to eq(nil)
       end
     end
   end

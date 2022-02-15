@@ -45,8 +45,10 @@ module InformixRails
       end
 
       def convert_label(item)
-        size = detect_label_size(item)
-        "<%= form.label :l001, 'l001', class: '#{size}' %>"
+        if item[0] == 'l'
+          size = detect_label_size(item)
+          return "<%= form.label :#{item.strip}, '#{item.strip}', class: '#{size}' %>"
+        end
       end
 
       def detect_label_size(item)
