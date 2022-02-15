@@ -26,17 +26,6 @@ describe "Per2Erb" do
     end
   end
 
-  describe "#split_items" do
-    it "splits the line into an array of items" do
-      line="[l001    ][f013  ]test[f123                                                     ]"
-      result = @per2erb.split_items(line)
-      expect(result[0]).to eq("[l001    ]")
-      expect(result[1]).to eq("[f013  ]")
-      expect(result[2]).to eq("test")
-      expect(result[3]).to eq("[f123                                                     ]")
-    end
-  end
-
   describe "#remove_before" do
     it "before {" do
       items = ["database", "screen", "{", "1", "}"]
@@ -87,6 +76,17 @@ describe "Per2Erb" do
           "</div>\n\n"
         expect(@per2erb.convert_line(line)).to eq(output)
       end
+    end
+  end
+
+  describe "#split_items" do
+    it "splits the line into an array of items" do
+      line="[l001    ][f013  ]test[f123                                                     ]"
+      result = @per2erb.split_items(line)
+      expect(result[0]).to eq("[l001    ]")
+      expect(result[1]).to eq("[f013  ]")
+      expect(result[2]).to eq("test")
+      expect(result[3]).to eq("[f123                                                     ]")
     end
   end
 
