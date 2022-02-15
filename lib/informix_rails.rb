@@ -89,13 +89,13 @@ module InformixRails
         if item[0..1] == '[l'
           size = detect_label_size(item)
           name = item.split(/([\[\]])/)[2].strip
-          return "<%= form.label :#{name}, '#{name}', class: '#{size}' %>"
+          return "  <%= form.label :#{name}, '#{name}', class: '#{size}' %>"
         elsif item[0] == '['
           size = detect_field_size(item)
           name = item.split(/([\[\]])/)[2].strip
-          return "<%= form.text_field :#{name}, class: '#{size}', disabled: @show %>"
+          return "  <%= form.text_field :#{name}, class: '#{size}', disabled: @show %>"
         else
-          return "#{item.strip}"
+          return "  #{item.strip}"
         end
       end
 

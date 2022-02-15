@@ -15,7 +15,7 @@ describe "Per2Erb" do
   describe "#convert" do
     it "outputs erb" do
       output="<div class='flex-container'>\n"\
-          "<%= form.label :l001, 'l001', class: 'flex-label-m' %>\n"\
+          "  <%= form.label :l001, 'l001', class: 'flex-label-m' %>\n"\
           "</div>\n"
 
       expect{InformixRails::Per2Erb.start(["convert", "sample_files/simple.per"])}.to output(output).to_stdout
@@ -25,7 +25,7 @@ describe "Per2Erb" do
   describe "#build_erb" do
     it "builds the whole erb" do
         output="<div class='flex-container'>\n"\
-          "<%= form.label :l001, 'l001', class: 'flex-label-m' %>\n"\
+          "  <%= form.label :l001, 'l001', class: 'flex-label-m' %>\n"\
           "</div>\n"
 
         expect(@per2erb.build_erb("sample_files/simple.per")).to eq(output)
@@ -47,9 +47,9 @@ describe "Per2Erb" do
     describe "given a contents with one label" do
       it "wraps it with a flex-container" do
         output="<div class='flex-container'>\n"\
-          "test\n"\
+          "  test\n"\
           "</div>\n"
-        expect(@per2erb.wrap_content("test")).to eq(output)
+        expect(@per2erb.wrap_content("  test")).to eq(output)
       end
     end
   end
@@ -60,9 +60,9 @@ describe "Per2Erb" do
       it "creates labels and fields" do
         line="[l001    ][f013  ][f123                                                     ]"
         output="<div class='flex-container'>\n"\
-          "<%= form.label :l001, 'l001', class: 'flex-label-m' %>\n"\
-          "<%= form.text_field :f013, class: 'flex-s', disabled: @show %>\n"\
-          "<%= form.text_field :f123, class: 'flex-l-g', disabled: @show %>\n"\
+          "  <%= form.label :l001, 'l001', class: 'flex-label-m' %>\n"\
+          "  <%= form.text_field :f013, class: 'flex-s', disabled: @show %>\n"\
+          "  <%= form.text_field :f123, class: 'flex-l-g', disabled: @show %>\n"\
           "</div>\n"
         expect(@per2erb.convert_line(line)).to eq(output)
       end
@@ -72,10 +72,10 @@ describe "Per2Erb" do
       it "keeps the labels" do
         line="[l001    ][f013  ]test[f123                                                 ]"
         output="<div class='flex-container'>\n"\
-          "<%= form.label :l001, 'l001', class: 'flex-label-m' %>\n"\
-          "<%= form.text_field :f013, class: 'flex-s', disabled: @show %>\n"\
-          "test\n"\
-          "<%= form.text_field :f123, class: 'flex-l-g', disabled: @show %>\n"\
+          "  <%= form.label :l001, 'l001', class: 'flex-label-m' %>\n"\
+          "  <%= form.text_field :f013, class: 'flex-s', disabled: @show %>\n"\
+          "  test\n"\
+          "  <%= form.text_field :f123, class: 'flex-l-g', disabled: @show %>\n"\
           "</div>\n"
         expect(@per2erb.convert_line(line)).to eq(output)
       end
@@ -85,13 +85,13 @@ describe "Per2Erb" do
   describe "#convert_item" do
     describe "passing in a label" do
       it "outputs erb" do
-        expect(@per2erb.convert_item("[l001   ]")).to eq("<%= form.label :l001, 'l001', class: 'flex-label' %>")
+        expect(@per2erb.convert_item("[l001   ]")).to eq("  <%= form.label :l001, 'l001', class: 'flex-label' %>")
       end
     end
 
     describe "passing in a text field" do
       it "outputs nil" do
-        expect(@per2erb.convert_item("[f013   ]")).to eq("<%= form.text_field :f013, class: 'flex-s', disabled: @show %>")
+        expect(@per2erb.convert_item("[f013   ]")).to eq("  <%= form.text_field :f013, class: 'flex-s', disabled: @show %>")
       end
     end
   end
