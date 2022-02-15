@@ -30,16 +30,16 @@ describe "Per2Erb" do
     end
   end
 
-  describe "#convert_label" do
+  describe "#convert_item" do
     describe "passing in a label" do
       it "outputs erb" do
-        expect(@per2erb.convert_label("l001   ")).to eq("<%= form.label :l001, 'l001', class: 'flex-label' %>")
+        expect(@per2erb.convert_item("l001   ")).to eq("<%= form.label :l001, 'l001', class: 'flex-label' %>")
       end
     end
 
     describe "passing in a text field" do
       it "outputs nil" do
-        expect(@per2erb.convert_label("f013   ")).to eq(nil)
+        expect(@per2erb.convert_item("f013   ")).to eq("<%= form.text_field :f013, class: 'flex-s', disabled: @show %>")
       end
     end
   end
@@ -60,6 +60,26 @@ describe "Per2Erb" do
     describe "pass in large item" do
       it "returns flex-label-l" do
         expect(@per2erb.detect_label_size("l001           ")).to eq("flex-label-l")
+      end
+    end
+  end
+
+  describe "#detect_field_size" do
+    describe "pass in small item" do
+      it "returns flex-s" do
+        expect(@per2erb.detect_field_size("f001   ")).to eq("flex-s")
+      end
+    end
+
+    describe "pass in medium item" do
+      it "returns flex-m" do
+        expect(@per2erb.detect_field_size("f001       ")).to eq("flex-m")
+      end
+    end
+
+    describe "pass in large item" do
+      it "returns flex-l" do
+        expect(@per2erb.detect_field_size("f001           ")).to eq("flex-l")
       end
     end
   end

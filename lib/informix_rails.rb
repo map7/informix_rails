@@ -44,10 +44,13 @@ module InformixRails
         line.gsub(']','').split("[").drop(1)
       end
 
-      def convert_label(item)
+      def convert_item(item)
         if item[0] == 'l'
           size = detect_label_size(item)
           return "<%= form.label :#{item.strip}, '#{item.strip}', class: '#{size}' %>"
+        else
+          size = detect_field_size(item)
+          return "<%= form.text_field :#{item.strip}, class: '#{size}', disabled: @show %>"
         end
       end
 
@@ -61,6 +64,18 @@ module InformixRails
         end
 
         "flex-label#{size}"
+      end
+
+      def detect_field_size(item)
+        if item.size < 8
+          size="-s"
+        elsif item.size < 12
+          size="-m"
+        elsif item.size < 16
+          size="-l"
+        end
+
+        "flex#{size}"
       end
 
       def hello
