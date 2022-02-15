@@ -14,7 +14,7 @@ describe "Per2Erb" do
 
   describe "#convert" do
     it "outputs erb" do
-      erb = "<div></div>"\
+      erb = ""\
         "\n"
 
       expect{InformixRails::Per2Erb.start(["convert", "sample_files/ftele00a.per"])}.to output(erb).to_stdout
@@ -30,13 +30,26 @@ describe "Per2Erb" do
     end
   end
 
+  describe "#wrap_container" do
+    describe "given a contents with one label" do
+      it "wraps it with a flex-container" do
+        output="<div class='flex-container'>\n"\
+          "test\n"\
+          "</div>\n"
+        expect(@per2erb.wrap_content("test")).to eq(output)
+      end
+    end
+  end
+
   describe "#convert_line" do
     describe "given label + 2 text fields" do
       it "creates labels and fields" do
         line="[l001    ][f013  ][f123                                                     ]"
-        output="<%= form.label :l001, 'l001', class: 'flex-label-m' %>\n"\
+        output="<div class='flex-container'>\n"\
+          "<%= form.label :l001, 'l001', class: 'flex-label-m' %>\n"\
           "<%= form.text_field :f013, class: 'flex-s', disabled: @show %>\n"\
-          "<%= form.text_field :f123, class: 'flex-l-g', disabled: @show %>"
+          "<%= form.text_field :f123, class: 'flex-l-g', disabled: @show %>\n"\
+          "</div>\n"
         expect(@per2erb.convert_line(line)).to eq(output)
       end
     end

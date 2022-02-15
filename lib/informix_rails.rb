@@ -40,9 +40,14 @@ module InformixRails
         output
       end
 
+      def wrap_content(content)
+        "<div class='flex-container'>\n#{content}\n</div>\n"
+      end
+
       def convert_line(line)
-        split_items(line).map{ |item|
+        content = split_items(line).map{ |item|
           convert_item(item)}.join("\n")
+        wrap_content(content)
       end
 
       def split_items(line)
