@@ -9,7 +9,7 @@ module InformixRails
   class Per2Erb < Thor
     desc "convert [file]", "Convert per to erb"
     def convert(file)
-      File.open('ftele00a.per', 'r') do |file|
+      File.open('sample_files/ftele00a.per', 'r') do |file|
 
         @read = false
 
