@@ -53,12 +53,26 @@ describe "Per2Erb" do
   end
 
   describe "#convert_line" do
+
     describe "given label + 2 text fields" do
       it "creates labels and fields" do
         line="[l001    ][f013  ][f123                                                     ]"
         output="<div class='flex-container'>\n"\
           "<%= form.label :l001, 'l001', class: 'flex-label-m' %>\n"\
           "<%= form.text_field :f013, class: 'flex-s', disabled: @show %>\n"\
+          "<%= form.text_field :f123, class: 'flex-l-g', disabled: @show %>\n"\
+          "</div>\n"
+        expect(@per2erb.convert_line(line)).to eq(output)
+      end
+    end
+
+    describe "labels and fields with text inbetween" do
+      it "keeps the labels" do
+        line="[l001    ][f013  ]test[f123                                                 ]"
+        output="<div class='flex-container'>\n"\
+          "<%= form.label :l001, 'l001', class: 'flex-label-m' %>\n"\
+          "<%= form.text_field :f013, class: 'flex-s', disabled: @show %>\n"\
+          "test\n"\
           "<%= form.text_field :f123, class: 'flex-l-g', disabled: @show %>\n"\
           "</div>\n"
         expect(@per2erb.convert_line(line)).to eq(output)

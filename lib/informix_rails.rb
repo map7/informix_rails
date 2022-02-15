@@ -59,16 +59,18 @@ module InformixRails
       end
 
       def split_items(line)
-        line.gsub(']','').split("[").drop(1)
+        line.split(/\[(.*?)\]/).reject{|c| c.strip.empty?}
       end
 
       def convert_item(item)
         if item[0] == 'l'
           size = detect_label_size(item)
           return "<%= form.label :#{item.strip}, '#{item.strip}', class: '#{size}' %>"
-        else
+        elsif item[0] == 'f'
           size = detect_field_size(item)
           return "<%= form.text_field :#{item.strip}, class: '#{size}', disabled: @show %>"
+        else
+          return "#{item.strip}"
         end
       end
 
