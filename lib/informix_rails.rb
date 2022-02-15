@@ -51,6 +51,13 @@ module InformixRails
         }
       end
 
+      def remove_after(token,items)
+        items.delete_if {|x|
+          @remove = true if x == token
+          @remove || x == token
+        }
+      end
+
       def wrap_content(content)
         "<div class='flex-container'>\n#{content}\n</div>\n\n"
       end
