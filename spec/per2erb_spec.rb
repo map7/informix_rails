@@ -6,12 +6,6 @@ describe "Per2Erb" do
     @per2erb = InformixRails::Per2Erb.new
   end
 
-  describe "#hello" do
-    it "outputs hello world" do
-      expect(@per2erb.hello).to eq("hello world")
-    end
-  end
-
   describe "#convert" do
     it "outputs erb" do
       output="<div class='flex-container'>\n"\
