@@ -1,0 +1,67 @@
+database pais
+screen size 24 by 80
+{
+[l001    ]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+end
+tables
+tele,
+teac
+attributes
+f9=formonly.ccode_tele type CHAR,noentry;
+f99=formonly.name_firm type CHAR,noentry;
+f100=formonly.client_tele type CHAR,autonext;
+f101=formonly.name_sur_clfi type CHAR,noentry;
+f013=formonly.staff_tele type CHAR,autonext;
+f123=formonly.name_sur_staf type CHAR,noentry;
+f014=formonly.ext_tele type INTEGER,format="##########",noentry;
+f015=formonly.date_tele type DATE,picture = "##/##/####",autonext;
+dr=formonly.datereplied_tele type DATE,picture = "##/##/####",noentry,autonext;
+f016=formonly.time_tele type datetime hour to minute,picture="##:##",autonext;
+tr=formonly.timereply_tele type datetime hour to minute,picture="##:##",noentry,autonext;
+t=formonly.trustcompany,noentry,autonext;
+bs=formonly.staffactioned type char,noentry,autonext;
+a1=formonly.type_tele_1 type char,autonext;
+f017=formonly.comments_tele type CHAR,autonext;
+f17=formonly.com2_tele type CHAR,autonext;
+f021=formonly.comments_teac type CHAR,noentry;
+---f023=formonly.name_sur_clfi_1 type CHAR,noentry;
+---f024=formonly.client_tele_1 type CHAR,noentry;
+---f018=formonly.time_tele_1 type datetime hour to minute;
+---f2=formonly.type_tele type SMALLINT,format="##",noentry;
+---f22=formonly.comments_teac_1 type CHAR;
+---f020=formonly.comments_tele_1 type CHAR,noentry;
+---f019=formonly.staff_mess_tele type CHAR,noentry;
+l099=formonly.ccode_tele_l,noentry;
+l100=formonly.client_tele_l,noentry;
+l006=formonly.comments_tele_l,noentry;
+---l012=formonly.comments_tele_1_l,noentry;
+l003=formonly.date_tele_l,noentry;
+l002=formonly.ext_tele_l,noentry;
+l001=formonly.staff_tele_l,noentry;
+---l011=formonly.staff_mess_tele_l,noentry;
+---l008=formonly.time_tele_l,noentry;
+l004=formonly.time_tele_1_l,noentry;
+---l009=formonly.type_tele_l,noentry;
+l005=formonly.type_tele_1_l,noentry;
+end
+instructions
+delimiters " "
+end
