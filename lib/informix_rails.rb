@@ -62,19 +62,16 @@ module InformixRails
         #line.split(/\[(.*?)\]/).reject{|c| c.strip.empty?}
 
         results = []
-        field = false
+        skip = 0
         items = (line.split(/([\[\]])/).reject{|c| c.strip.empty?})
         items.each_with_index do |item,i|
 
           if item == '['
-            field = true
+            skip = 2
             results << items[i] + items[i+1] + items[i+2]
 
-          elsif item == ']'
-            field = false
-            next
-
-          elsif field
+          elsif skip > 0
+            skip -= 1
             next
 
           else
