@@ -30,11 +30,10 @@ module InformixRails
         @read = false
 
         File.foreach(file) do |line|
+          break if line[0] == "}"
           if line[0] == "{"
             @read=true
             next
-          elsif line[0] == "}"
-            @read=false
           end
 
           if @read
@@ -42,6 +41,14 @@ module InformixRails
           end
         end
         output
+      end
+
+      def remove_before(token,items)
+        @remove = true
+        items.delete_if {|x|
+          @remove = false if x == token
+          @remove || x == token
+        }
       end
 
       def wrap_content(content)

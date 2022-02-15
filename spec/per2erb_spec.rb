@@ -37,6 +37,13 @@ describe "Per2Erb" do
     end
   end
 
+  describe "#remove_before" do
+    it "before {" do
+      items = ["database", "screen", "{", "1", "}"]
+      expect(@per2erb.remove_before("{", items)).to eq(["1", "}"])
+    end
+  end
+
   describe "#wrap_container" do
     describe "given a contents with one label" do
       it "wraps it with a flex-container" do
