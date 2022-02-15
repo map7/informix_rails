@@ -49,7 +49,7 @@ module InformixRails
       end
 
       def wrap_content(content)
-        "<div class='flex-container'>\n#{content}\n</div>\n"
+        "<div class='flex-container'>\n#{content}\n</div>\n\n"
       end
 
       def convert_line(line)
