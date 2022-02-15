@@ -6,3 +6,9 @@ describe "#hello" do
     expect(InformixRails::Per2Erb.start(["hello"])).to eq("hello world")
   end
 end
+
+describe "#convert" do
+  it "reads in per and outputs html" do
+    expect(InformixRails::Per2Erb.start(["convert", "sample_files/ftele00a.per"])).to eq("<div></div>")
+  end
+end

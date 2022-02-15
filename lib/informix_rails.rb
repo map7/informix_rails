@@ -14,6 +14,9 @@ module InformixRails
 
     desc "convert [file]", "Convert per to erb"
     def convert(file)
+
+      output = []
+
       File.open('sample_files/ftele00a.per', 'r') do |file|
 
         @read = false
@@ -27,11 +30,13 @@ module InformixRails
           end
 
           if @read
-            puts line
+            output << line
           end
 
         end
       end
+
+      "<div></div>"
     end
   end
 
