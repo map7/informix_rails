@@ -130,5 +130,5 @@ module InformixRails
       end
 
     }
-    end
+  end
 end
