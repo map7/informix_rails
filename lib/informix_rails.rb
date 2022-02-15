@@ -32,7 +32,7 @@ module InformixRails
         end
       end
 
-      "<div></div>"
+      puts "<div></div>"
     end
 
     def hello
