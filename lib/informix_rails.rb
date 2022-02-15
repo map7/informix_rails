@@ -10,25 +10,33 @@ module InformixRails
 
     desc "convert [file]", "Convert per to erb"
     def convert(file)
-      output = read(file)
-
-      puts "<div></div>"
+      puts build_erb(file)
     end
 
     no_commands{
 
+      def build_erb(file)
+        output = read(file)
+
+        content = ""
+        output.each do |line|
+          content += convert_line(line) unless line.strip.empty?
+        end
+        content
+      end
+
       def read(file)
         output = []
 
-        File.open('sample_files/ftele00a.per', 'r') do |file|
+        File.open(file, 'r') do |file|
 
           @read = false
 
           file.readlines.each do |line|
-            if line =~ /screen/
+            if line[0] == "{"
               @read=true
               next
-            elsif line =~ /end/
+            elsif line[0] == "}"
               @read=false
             end
 

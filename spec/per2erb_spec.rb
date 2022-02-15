@@ -14,10 +14,21 @@ describe "Per2Erb" do
 
   describe "#convert" do
     it "outputs erb" do
-      erb = ""\
-        "\n"
+      output="<div class='flex-container'>\n"\
+          "<%= form.label :l001, 'l001', class: 'flex-label-m' %>\n"\
+          "</div>\n"
 
-      expect{InformixRails::Per2Erb.start(["convert", "sample_files/ftele00a.per"])}.to output(erb).to_stdout
+      expect{InformixRails::Per2Erb.start(["convert", "sample_files/simple.per"])}.to output(output).to_stdout
+    end
+  end
+
+  describe "#build_erb" do
+    it "builds the whole erb" do
+        output="<div class='flex-container'>\n"\
+          "<%= form.label :l001, 'l001', class: 'flex-label-m' %>\n"\
+          "</div>\n"
+
+        expect(@per2erb.build_erb("sample_files/simple.per")).to eq(output)
     end
   end
 
