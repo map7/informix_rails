@@ -14,33 +14,43 @@ module InformixRails
       puts output
     end
 
-    private
-    def read(file)
-      output = []
+    no_commands{
 
-      File.open('sample_files/ftele00a.per', 'r') do |file|
+      def read(file)
+        output = []
 
-        @read = false
+        File.open('sample_files/ftele00a.per', 'r') do |file|
 
-        file.readlines.each do |line|
-          if line =~ /screen/
-            @read=true
-            next
-          elsif line =~ /end/
-            @read=false
-          end
+          @read = false
 
-          if @read
-            output << line
+          file.readlines.each do |line|
+            if line =~ /screen/
+              @read=true
+              next
+            elsif line =~ /end/
+              @read=false
+            end
+
+            if @read
+              output << line
+            end
           end
         end
+        output
       end
-      output
-    end
 
-    def hello
-      "hello world"
-    end
-  end
+      def split_items(line)
+        line.gsub(']','').split("[").drop(1)
+      end
 
+      def convert_label
+
+      end
+
+      def hello
+        "hello world"
+      end
+
+    }
+    end
 end
