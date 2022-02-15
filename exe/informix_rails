@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+
+require "informix_rails"
+InformixRails::Per2Erb.start(ARGV)
