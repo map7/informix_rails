@@ -59,8 +59,6 @@ module InformixRails
       end
 
       def split_items(line)
-        #line.split(/\[(.*?)\]/).reject{|c| c.strip.empty?}
-
         results = []
         skip = 0
         items = (line.split(/([\[\]])/).reject{|c| c.strip.empty?})
