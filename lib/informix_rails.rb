@@ -59,27 +59,54 @@ module InformixRails
       end
 
       def split_items(line)
-        line.split(/\[(.*?)\]/).reject{|c| c.strip.empty?}
+        #line.split(/\[(.*?)\]/).reject{|c| c.strip.empty?}
+
+        items = []
+        single_item = ""
+        field = false
+        (line.split(/([\[\]])/).reject{|c| c.strip.empty?}).each do |item|
+
+          if item == '['
+            field = true
+            single_item += item
+
+          elsif item == ']'
+            field = false
+            single_item += item
+            items << single_item
+            single_item = ''
+
+          elsif field
+            single_item += item
+
+          else
+            items << item
+          end
+        end
+        return items
+
       end
 
       def convert_item(item)
-        if item[0] == 'l'
+        if item[0..1] == '[l'
           size = detect_label_size(item)
-          return "<%= form.label :#{item.strip}, '#{item.strip}', class: '#{size}' %>"
-        elsif item[0] == 'f'
+          name = item.split(/([\[\]])/)[2].strip
+          return "<%= form.label :#{name}, '#{name}', class: '#{size}' %>"
+        elsif item[0] == '['
           size = detect_field_size(item)
-          return "<%= form.text_field :#{item.strip}, class: '#{size}', disabled: @show %>"
+          name = item.split(/([\[\]])/)[2].strip
+          return "<%= form.text_field :#{name}, class: '#{size}', disabled: @show %>"
         else
           return "#{item.strip}"
         end
       end
 
       def detect_label_size(item)
-        if item.size < 8
+        if item.size < 10
           size=""
-        elsif item.size < 12
+        elsif item.size < 14
           size="-m"
-        elsif item.size < 16
+        elsif item.size < 18
           size="-l"
         end
 
@@ -87,11 +114,11 @@ module InformixRails
       end
 
       def detect_field_size(item)
-        if item.size < 8
+        if item.size < 10
           size="-s"
-        elsif item.size < 12
+        elsif item.size < 14
           size="-m"
-        elsif item.size < 16
+        elsif item.size < 18
           size="-l"
         else
           size="-l-g"

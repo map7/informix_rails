@@ -34,10 +34,12 @@ describe "Per2Erb" do
 
   describe "#split_items" do
     it "splits the line into an array of items" do
-      line="[l001    ][f013  ][f123                                                     ]"
-      expect(@per2erb.split_items(line)[0]).to eq("l001    ")
-      expect(@per2erb.split_items(line)[1]).to eq("f013  ")
-      expect(@per2erb.split_items(line)[2]).to eq("f123                                                     ")
+      line="[l001    ][f013  ]test[f123                                                     ]"
+      result = @per2erb.split_items(line)
+      expect(result[0]).to eq("[l001    ]")
+      expect(result[1]).to eq("[f013  ]")
+      expect(result[2]).to eq("test")
+      expect(result[3]).to eq("[f123                                                     ]")
     end
   end
 
@@ -83,13 +85,13 @@ describe "Per2Erb" do
   describe "#convert_item" do
     describe "passing in a label" do
       it "outputs erb" do
-        expect(@per2erb.convert_item("l001   ")).to eq("<%= form.label :l001, 'l001', class: 'flex-label' %>")
+        expect(@per2erb.convert_item("[l001   ]")).to eq("<%= form.label :l001, 'l001', class: 'flex-label' %>")
       end
     end
 
     describe "passing in a text field" do
       it "outputs nil" do
-        expect(@per2erb.convert_item("f013   ")).to eq("<%= form.text_field :f013, class: 'flex-s', disabled: @show %>")
+        expect(@per2erb.convert_item("[f013   ]")).to eq("<%= form.text_field :f013, class: 'flex-s', disabled: @show %>")
       end
     end
   end
