@@ -61,29 +61,27 @@ module InformixRails
       def split_items(line)
         #line.split(/\[(.*?)\]/).reject{|c| c.strip.empty?}
 
-        items = []
-        single_item = ""
+        results = []
         field = false
-        (line.split(/([\[\]])/).reject{|c| c.strip.empty?}).each do |item|
+        items = (line.split(/([\[\]])/).reject{|c| c.strip.empty?})
+        items.each_with_index do |item,i|
 
           if item == '['
             field = true
-            single_item += item
+            results << items[i] + items[i+1] + items[i+2]
 
           elsif item == ']'
             field = false
-            single_item += item
-            items << single_item
-            single_item = ''
+            next
 
           elsif field
-            single_item += item
+            next
 
           else
-            items << item
+            results << item
           end
         end
-        return items
+        return results
 
       end
 
