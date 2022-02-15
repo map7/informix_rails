@@ -27,22 +27,18 @@ module InformixRails
 
       def read(file)
         output = []
+        @read = false
 
-        File.open(file, 'r') do |file|
+        File.foreach(file) do |line|
+          if line[0] == "{"
+            @read=true
+            next
+          elsif line[0] == "}"
+            @read=false
+          end
 
-          @read = false
-
-          file.readlines.each do |line|
-            if line[0] == "{"
-              @read=true
-              next
-            elsif line[0] == "}"
-              @read=false
-            end
-
-            if @read
-              output << line
-            end
+          if @read
+            output << line
           end
         end
         output
