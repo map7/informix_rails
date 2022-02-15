@@ -44,8 +44,19 @@ module InformixRails
         line.gsub(']','').split("[").drop(1)
       end
 
-      def convert_label
+      def convert_label(item)
+        size = detect_size(item)
+        "<%= form.label :l001, 'l001', class: '#{size}' %>"
+      end
 
+      def detect_size(item)
+        if item.size < 8
+          "flex-label"
+        elsif item.size < 12
+          "flex-label-m"
+        elsif item.size < 16
+          "flex-label-l"
+        end
       end
 
       def hello

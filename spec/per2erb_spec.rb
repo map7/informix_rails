@@ -33,7 +33,7 @@ describe "Per2Erb" do
   describe "#convert_label" do
     describe "passing in a label" do
       it "outputs erb" do
-
+        expect(@per2erb.convert_label("l001   ")).to eq("<%= form.label :l001, 'l001', class: 'flex-label' %>")
       end
     end
 
@@ -43,4 +43,25 @@ describe "Per2Erb" do
       end
     end
   end
+
+  describe "#detect_size" do
+    describe "pass in small item" do
+      it "returns flex-label" do
+        expect(@per2erb.detect_size("l001   ")).to eq("flex-label")
+      end
+    end
+
+    describe "pass in medium item" do
+      it "returns flex-label-m" do
+        expect(@per2erb.detect_size("l001       ")).to eq("flex-label-m")
+      end
+    end
+
+    describe "pass in large item" do
+      it "returns flex-label-l" do
+        expect(@per2erb.detect_size("l001           ")).to eq("flex-label-l")
+      end
+    end
+  end
+
 end
