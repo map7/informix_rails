@@ -40,6 +40,11 @@ module InformixRails
         output
       end
 
+      def convert_line(line)
+        split_items(line).map{ |item|
+          convert_item(item)}.join("\n")
+      end
+
       def split_items(line)
         line.gsub(']','').split("[").drop(1)
       end
@@ -73,6 +78,8 @@ module InformixRails
           size="-m"
         elsif item.size < 16
           size="-l"
+        else
+          size="-l-g"
         end
 
         "flex#{size}"
