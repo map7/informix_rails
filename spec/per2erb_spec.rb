@@ -44,22 +44,22 @@ describe "Per2Erb" do
     end
   end
 
-  describe "#detect_size" do
+  describe "#detect_label_size" do
     describe "pass in small item" do
       it "returns flex-label" do
-        expect(@per2erb.detect_size("l001   ")).to eq("flex-label")
+        expect(@per2erb.detect_label_size("l001   ")).to eq("flex-label")
       end
     end
 
     describe "pass in medium item" do
       it "returns flex-label-m" do
-        expect(@per2erb.detect_size("l001       ")).to eq("flex-label-m")
+        expect(@per2erb.detect_label_size("l001       ")).to eq("flex-label-m")
       end
     end
 
     describe "pass in large item" do
       it "returns flex-label-l" do
-        expect(@per2erb.detect_size("l001           ")).to eq("flex-label-l")
+        expect(@per2erb.detect_label_size("l001           ")).to eq("flex-label-l")
       end
     end
   end
