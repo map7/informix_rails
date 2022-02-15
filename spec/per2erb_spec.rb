@@ -8,11 +8,14 @@ describe "#hello" do
   end
 end
 
-# describe "#convert" do
-#   it "reads in per and outputs html" do
-#     expect{InformixRails::Per2Erb.start(["convert", "sample_files/ftele00a.per"])}.to output("<div></div>\n").to_stdout
-#   end
-# end
+describe "#convert" do
+  it "outputs erb" do
+    erb = "<div></div>"\
+      "\n"
+
+    expect{InformixRails::Per2Erb.start(["convert", "sample_files/ftele00a.per"])}.to output(erb).to_stdout
+  end
+end
 
 describe "#split_items" do
   it "splits the line into an array of items" do

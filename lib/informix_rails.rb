@@ -11,7 +11,8 @@ module InformixRails
     desc "convert [file]", "Convert per to erb"
     def convert(file)
       output = read(file)
-      puts output
+
+      puts "<div></div>"
     end
 
     no_commands{
