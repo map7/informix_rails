@@ -44,17 +44,17 @@ module InformixRails
       end
 
       def remove_before(token,items)
-        @remove = true
-        items.delete_if {|x|
-          @remove = false if x == token
-          @remove || x == token
-        }
+        remove(token,items) {|x| !@found}
       end
 
       def remove_after(token,items)
+        remove(token,items) {|x| @found}
+      end
+
+      def remove(token,items)
         items.delete_if {|x|
-          @remove = true if x == token
-          @remove || x == token
+          @found = true if x == token
+          yield(x) || x == token
         }
       end
 
