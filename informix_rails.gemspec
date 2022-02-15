@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.summary       = "Convert Informix to Rails"
   spec.description   = "Convert Informix 7.x forms (per files) to Rails views (erb files)."
   spec.homepage      = "https://github.com/map7/informix_rails"
-  spec.required_ruby_version = ">= 2.4.0"
+  spec.required_ruby_version = ">= 2.5.0"
 
   # spec.metadata["allowed_push_host"] = "TODO: Set to your gem server 'https://example.com'"
 
