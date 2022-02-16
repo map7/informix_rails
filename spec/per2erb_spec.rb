@@ -4,12 +4,12 @@ require_relative '../lib/informix_rails.rb'
 describe "Per2Erb" do
   before do
     @per2erb = InformixRails::Per2Erb.new
-    @form_start = "<%= form_with(model: @model, html: {autocomplete: 'off'}) do |form| %>\n"
-    @form_end = "<% end %>\n"
-    @con_start = "<div class='flex-container'>\n"
-    @con_end = "</div>\n\n"
     @box_start = "<div class='one_box'>\n"
-    @box_end = "</div>\n"
+    @form_start =  "<%= form_with(model: @model, html: {autocomplete: 'off'}) do |form| %>\n"
+    @con_start =     "<div class='flex-container'>\n"
+    @con_end =       "</div>\n\n"
+    @form_end =    "<% end %>\n"
+    @box_end =   "</div>\n"
   end
 
   describe "#convert" do
