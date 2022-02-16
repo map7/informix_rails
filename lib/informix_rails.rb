@@ -28,7 +28,7 @@ module InformixRails
       def read(file)
         output = File.read(file).split("\n")
         output = crop("{","}",output)
-        output.delete_if{|x| x.strip.empty?}
+        output.reject!(&:empty?)
         output
       end
 
