@@ -32,6 +32,13 @@ describe "Per2Erb" do
     end
   end
 
+  describe "#crop" do
+    it "before {" do
+      items = ["database pais", "screen size 24 by 80", "{", "1", "}"]
+      expect(@per2erb.crop("{", "}", items)).to eq(["1"])
+    end
+  end
+
   describe "#remove_before" do
     it "before {" do
       items = ["database pais", "screen size 24 by 80", "{", "1", "}"]

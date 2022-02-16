@@ -27,9 +27,14 @@ module InformixRails
 
       def read(file)
         output = File.read(file).split("\n")
-        output = remove_before("{",output)
-        output = remove_after("}",output)
+        output = crop("{","}",output)
         output.delete_if{|x| x.strip.empty?}
+        output
+      end
+
+      def crop(before,after,items)
+        output = remove_before("{",items)
+        output = remove_after("}",output)
         output
       end
 
