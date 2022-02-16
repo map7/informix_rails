@@ -56,6 +56,7 @@ module InformixRails
 
       def wrap_content(content)
         content = wrap_form(content)
+        content = add_actions(content)
         content = wrap_box(content)
         content
       end
@@ -76,6 +77,17 @@ module InformixRails
         "<div class='one_box'>\n"\
           "#{content}"\
           "</div>\n"
+      end
+
+      def add_actions(content)
+        "#{content}"\
+          "<div class='item_actions'>\n"\
+      "Option:\n"\
+      "<span class='links'>\n"\
+      "Add\nEd\nDel\nNx\nPr\nFd\nVw\n"\
+      "<%= link_to_kb 'X', '/menus/main', ['x','f7']  %>\n"\
+      "<%= form.submit 'OK[F11]', id: 'ok', 'data-reset_form-target':'button' %>\n"\
+      "</span>\n"
       end
 
       def convert_line(line)

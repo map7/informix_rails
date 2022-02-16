@@ -9,6 +9,13 @@ describe "Per2Erb" do
     @con_start =     "<div class='flex-container'>\n"
     @con_end =       "</div>\n\n"
     @form_end =    "<% end %>\n"
+    @actions = "<div class='item_actions'>\n"\
+      "Option:\n"\
+      "<span class='links'>\n"\
+      "Add\nEd\nDel\nNx\nPr\nFd\nVw\n"\
+      "<%= link_to_kb 'X', '/menus/main', ['x','f7']  %>\n"\
+      "<%= form.submit 'OK[F11]', id: 'ok', 'data-reset_form-target':'button' %>\n"\
+      "</span>\n"
     @box_end =   "</div>\n"
   end
 
@@ -16,7 +23,7 @@ describe "Per2Erb" do
     it "outputs erb" do
       output=@box_start + @form_start + @con_start +
         "  <%= form.label :l001, 'l001', class: 'flex-label-m' %>\n" +
-        @con_end + @form_end + @box_end
+        @con_end + @form_end + @actions + @box_end
 
       expect{InformixRails::Per2Erb.start(["convert", "sample_files/simple.per"])}.to output(output).to_stdout
     end
@@ -26,7 +33,7 @@ describe "Per2Erb" do
     it "builds the whole erb" do
       output=@box_start + @form_start + @con_start +
         "  <%= form.label :l001, 'l001', class: 'flex-label-m' %>\n" +
-        @con_end + @form_end + @box_end
+        @con_end + @form_end + @actions + @box_end
 
         expect(@per2erb.build_erb("sample_files/simple.per")).to eq(output)
     end
@@ -62,7 +69,7 @@ describe "Per2Erb" do
   describe "#wrap_content" do
     describe "given a contents with one label" do
       it "wraps it with a flex-container" do
-        output=@box_start + @form_start + "  test\n" + @form_end + @box_end
+        output=@box_start + @form_start + "  test\n" + @form_end + @actions + @box_end
         expect(@per2erb.wrap_content("  test\n")).to eq(output)
       end
     end
@@ -95,6 +102,15 @@ describe "Per2Erb" do
       it "wraps it with a div one_box" do
         output=@box_start + "  test\n" + @box_end
         expect(@per2erb.wrap_box("  test\n")).to eq(output)
+      end
+    end
+  end
+
+  describe "#add_actions" do
+    describe "given some test content" do
+      it "appends actions to then end" do
+        output="  test\n" + @actions
+        expect(@per2erb.add_actions("  test\n")).to eq(output)
       end
     end
   end
