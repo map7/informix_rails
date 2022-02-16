@@ -87,7 +87,8 @@ module InformixRails
       "Add\nEd\nDel\nNx\nPr\nFd\nVw\n"\
       "<%= link_to_kb 'X', '/menus/main', ['x','f7']  %>\n"\
       "<%= form.submit 'OK[F11]', id: 'ok', 'data-reset_form-target':'button' %>\n"\
-      "</span>\n"
+      "</span>\n"\
+      "</div>\n"
       end
 
       def convert_line(line)
