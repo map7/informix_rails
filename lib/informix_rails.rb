@@ -33,9 +33,9 @@ module InformixRails
       end
 
       def crop(before,after,items)
-        output = remove_before("{",items)
-        output = remove_after("}",output)
-        output
+        items = remove_before("{",items)
+        items = remove_after("}",items)
+        items
       end
 
       def remove_before(token,items)
