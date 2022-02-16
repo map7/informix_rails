@@ -55,11 +55,19 @@ module InformixRails
       end
 
       def wrap_content(content)
-        wrap_container(content)
+        content = wrap_container(content)
+        content = wrap_form(content)
+        content
       end
 
       def wrap_container(content)
         "<div class='flex-container'>\n#{content}\n</div>\n\n"
+      end
+
+      def wrap_form(content)
+        "<%= form_with(model: @model, html: {autocomplete: 'off'}) do |form| %>\n"\
+          "#{content}\n"\
+          "<% end %>\n"
       end
 
       def convert_line(line)
