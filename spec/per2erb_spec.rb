@@ -7,14 +7,16 @@ describe "Per2Erb" do
     @form_start = "<%= form_with(model: @model, html: {autocomplete: 'off'}) do |form| %>\n"
     @form_end = "<% end %>\n"
     @con_start = "<div class='flex-container'>\n"
-    @con_end = "</div>\n\n\n"
+    @con_end = "</div>\n\n"
+    @box_start = "<div class='one_box'>\n"
+    @box_end = "</div>\n"
   end
 
   describe "#convert" do
     it "outputs erb" do
-      output=@form_start + @con_start +
+      output=@box_start + @form_start + @con_start +
         "  <%= form.label :l001, 'l001', class: 'flex-label-m' %>\n" +
-        @con_end + @form_end
+        @con_end + @form_end + @box_end
 
       expect{InformixRails::Per2Erb.start(["convert", "sample_files/simple.per"])}.to output(output).to_stdout
     end
@@ -22,9 +24,9 @@ describe "Per2Erb" do
 
   describe "#build_erb" do
     it "builds the whole erb" do
-      output=@form_start + @con_start +
+      output=@box_start + @form_start + @con_start +
         "  <%= form.label :l001, 'l001', class: 'flex-label-m' %>\n" +
-        @con_end + @form_end
+        @con_end + @form_end + @box_end
 
         expect(@per2erb.build_erb("sample_files/simple.per")).to eq(output)
     end
@@ -60,8 +62,8 @@ describe "Per2Erb" do
   describe "#wrap_content" do
     describe "given a contents with one label" do
       it "wraps it with a flex-container" do
-        output=@form_start + @con_start + "  test\n" + @con_end + @form_end
-        expect(@per2erb.wrap_content("  test")).to eq(output)
+        output=@box_start + @form_start + "  test\n" + @form_end + @box_end
+        expect(@per2erb.wrap_content("  test\n")).to eq(output)
       end
     end
   end
@@ -78,12 +80,21 @@ describe "Per2Erb" do
   end
 
   describe "#wrap_form" do
-    describe "given a contents with one label" do
-      it "wraps it with a flex-container" do
-        output="<%= form_with(model: @model, html: {autocomplete: 'off'}) do |form| %>\n"\
-          "  test\n"\
-          "<% end %>\n"
-        expect(@per2erb.wrap_form("  test")).to eq(output)
+    describe "given some test content" do
+      it "wraps it with a form" do
+        output=@form_start +
+          "  test\n" +
+          @form_end
+        expect(@per2erb.wrap_form("  test\n")).to eq(output)
+      end
+    end
+  end
+
+  describe "#wrap_box" do
+    describe "given some test content" do
+      it "wraps it with a div one_box" do
+        output=@box_start + "  test\n" + @box_end
+        expect(@per2erb.wrap_box("  test\n")).to eq(output)
       end
     end
   end
@@ -93,11 +104,11 @@ describe "Per2Erb" do
     describe "given label + 2 text fields" do
       it "creates labels and fields" do
         line="[l001    ][f013  ][f123                                                     ]"
-        output=@form_start + @con_start +
+        output=@con_start +
           "  <%= form.label :l001, 'l001', class: 'flex-label-m' %>\n"\
           "  <%= form.text_field :f013, class: 'flex-s', disabled: @show %>\n"\
           "  <%= form.text_field :f123, class: 'flex-l-g', disabled: @show %>\n" +
-          @con_end + @form_end
+          @con_end
         expect(@per2erb.convert_line(line)).to eq(output)
       end
     end
@@ -105,12 +116,12 @@ describe "Per2Erb" do
     describe "labels and fields with text inbetween" do
       it "keeps the labels" do
         line="[l001    ][f013  ]test[f123                                                 ]"
-        output=@form_start + @con_start +
+        output=@con_start +
           "  <%= form.label :l001, 'l001', class: 'flex-label-m' %>\n"\
           "  <%= form.text_field :f013, class: 'flex-s', disabled: @show %>\n"\
           "  test\n"\
           "  <%= form.text_field :f123, class: 'flex-l-g', disabled: @show %>\n" +
-          @con_end + @form_end
+          @con_end
         expect(@per2erb.convert_line(line)).to eq(output)
       end
     end

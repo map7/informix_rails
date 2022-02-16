@@ -22,7 +22,7 @@ module InformixRails
         output.each do |line|
           content += convert_line(line) unless line.strip.empty?
         end
-        content
+        wrap_content(content)
       end
 
       def read(file)
@@ -55,25 +55,33 @@ module InformixRails
       end
 
       def wrap_content(content)
-        content = wrap_container(content)
         content = wrap_form(content)
+        content = wrap_box(content)
         content
       end
 
       def wrap_container(content)
-        "<div class='flex-container'>\n#{content}\n</div>\n\n"
+        "<div class='flex-container'>\n"\
+          "#{content}\n"\
+          "</div>\n\n"
       end
 
       def wrap_form(content)
         "<%= form_with(model: @model, html: {autocomplete: 'off'}) do |form| %>\n"\
-          "#{content}\n"\
+          "#{content}"\
           "<% end %>\n"
+      end
+
+      def wrap_box(content)
+        "<div class='one_box'>\n"\
+          "#{content}"\
+          "</div>\n"
       end
 
       def convert_line(line)
         content = split_items(line).map{ |item|
           convert_item(item)}.join("\n")
-        wrap_content(content)
+        wrap_container(content)
       end
 
       def split_items(line)
