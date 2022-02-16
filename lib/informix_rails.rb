@@ -26,35 +26,26 @@ module InformixRails
       end
 
       def read(file)
-        output = []
-        @read = false
-
-        File.foreach(file) do |line|
-          break if line[0] == "}"
-          if line[0] == "{"
-            @read=true
-            next
-          end
-
-          if @read
-            output << line
-          end
-        end
+        output = File.read(file).split("\n")
+        output = remove_before("{",output)
+        output = remove_after("}",output)
+        output.delete_if{|x| x.strip.empty?}
         output
       end
 
       def remove_before(token,items)
-        remove(token,items) {|x| !@found}
+        remove(token,items) {|found| !found}
       end
 
       def remove_after(token,items)
-        remove(token,items) {|x| @found}
+        remove(token,items) {|found| found}
       end
 
       def remove(token,items)
+        found = false
         items.delete_if {|x|
-          @found = true if x == token
-          yield(x) || x == token
+          found = true if x == token
+          yield(found) || x == token
         }
       end
 

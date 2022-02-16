@@ -26,9 +26,15 @@ describe "Per2Erb" do
     end
   end
 
+  describe "#read" do
+    it "reads and splits the file" do
+      expect(@per2erb.read("sample_files/simple.per")).to eq(["[l001    ]"])
+    end
+  end
+
   describe "#remove_before" do
     it "before {" do
-      items = ["database", "screen", "{", "1", "}"]
+      items = ["database pais", "screen size 24 by 80", "{", "1", "}"]
       expect(@per2erb.remove_before("{", items)).to eq(["1", "}"])
     end
   end
