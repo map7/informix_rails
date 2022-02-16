@@ -55,6 +55,10 @@ module InformixRails
       end
 
       def wrap_content(content)
+        wrap_container(content)
+      end
+
+      def wrap_container(content)
         "<div class='flex-container'>\n#{content}\n</div>\n\n"
       end
 

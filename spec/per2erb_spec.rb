@@ -59,7 +59,7 @@ describe "Per2Erb" do
         output="<div class='flex-container'>\n"\
           "  test\n"\
           "</div>\n\n"
-        expect(@per2erb.wrap_content("  test")).to eq(output)
+        expect(@per2erb.wrap_container("  test")).to eq(output)
       end
     end
   end
