@@ -146,7 +146,11 @@ module InformixRails
       end
 
       def detect_field_size(item)
-        if item.size < 10
+        if item.size < 4
+          size="-xxs"
+        elsif item.size < 7
+          size="-xs"
+        elsif item.size < 10
           size="-s"
         elsif item.size < 14
           size="-m"
