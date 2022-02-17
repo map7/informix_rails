@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    informix_rails (0.3.1)
+    informix_rails (0.3.2)
       rake
       rspec
       thor (~> 1.2.1)
