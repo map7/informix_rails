@@ -22,9 +22,9 @@ describe "Per2Erb" do
 
   describe "#convert" do
     it "outputs erb" do
-      output=@box_start + @form_start + @con_start +
+      output=@form_start + @box_start + @con_start +
         "  <%= form.label :l001, 'l001', class: 'flex-label-m' %>\n" +
-        @con_end + @actions + @form_end + @box_end
+        @con_end + @actions + @box_end + @form_end
 
       expect{InformixRails::Per2Erb.start(["convert", "sample_files/simple.per"])}.to output(output).to_stdout
     end
@@ -32,9 +32,9 @@ describe "Per2Erb" do
 
   describe "#build_erb" do
     it "builds the whole erb" do
-      output=@box_start + @form_start + @con_start +
+      output=@form_start + @box_start + @con_start +
         "  <%= form.label :l001, 'l001', class: 'flex-label-m' %>\n" +
-        @con_end + @actions + @form_end + @box_end
+        @con_end + @actions + @box_end + @form_end
 
         expect(@per2erb.build_erb("sample_files/simple.per")).to eq(output)
     end
@@ -70,7 +70,7 @@ describe "Per2Erb" do
   describe "#wrap_content" do
     describe "given a contents with one label" do
       it "wraps it with a flex-container" do
-        output=@box_start + @form_start + "  test\n" + @actions + @form_end + @box_end
+        output=@form_start + @box_start + "  test\n" + @actions + @box_end + @form_end
         expect(@per2erb.wrap_content("  test\n")).to eq(output)
       end
     end

@@ -56,8 +56,8 @@ module InformixRails
 
       def wrap_content(content)
         content = add_actions(content)
-        content = wrap_form(content)
         content = wrap_box(content)
+        content = wrap_form(content)
         content
       end
 
